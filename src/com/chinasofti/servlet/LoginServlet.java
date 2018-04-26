@@ -15,6 +15,11 @@ import com.chinasofti.dao.EmployeeDao;
 import com.chinasofti.service.EmployeeService;
 
 public class LoginServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public LoginServlet() {
 		super();
 	}
@@ -43,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("状态" + emp.getStatus());
 			System.out.println("---------");
 			System.out.println("身份" + emp.getRole());
-			if (emp.getStatus() != null) {
+			
 				/*
 				 * 0：待审批 1：审批通过 2：审批未通过
 				 */
@@ -71,11 +76,12 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("userName", emp.getName());
 					session.setAttribute("id", emp.getId());
 					request.setAttribute("msg", msg);
-					switch (emp.getRole()) {
-					case "1":
+					System.out.println("111111");
+					switch (role) {
+					case "管理员":
 						request.getRequestDispatcher("admin/adminindex.jsp").forward(request, response);
 						break;
-					case "2":
+					case "普通用户":
 						request.getRequestDispatcher("admin/employeeindex.jsp").forward(request, response);
 						break;
 					}
@@ -92,7 +98,7 @@ public class LoginServlet extends HttpServlet {
 					break;
 				}
 
-			}
+			
 		} else {
 			msg = "帐号密码错误,登录失败";
 			request.setAttribute("msg", msg);
